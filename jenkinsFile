@@ -1,0 +1,4 @@
+node {
+  stage('Getting ready...') {
+    git branch: "dev", credentialsId: 'your_id_on_jenkins', url: 'https://github.com/amenski/jenkins_pipeline.git'
+  }
