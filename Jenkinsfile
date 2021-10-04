@@ -25,7 +25,7 @@ pipeline {
                                     sshTransfer(
                                         sourceFiles: 'target/helloworld.war',
                                         removePrefix: 'target/',
-                                        remoteDirectory: '/tmp',
+                                        remoteDirectory: '/opt/tomcat/latest/webapps',
                                        
                                     )
                                 ]
