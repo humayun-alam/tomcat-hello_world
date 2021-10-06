@@ -3,7 +3,7 @@ pipeline{
   stages{
     stage("Git Checkout"){
       steps{
-          git branch: 'master',
+          git branch: 'main',
             credentialsId: 'github', 
             url: 'https://github.com/humayun-alam/tomcat-hello_world.git'
            }
