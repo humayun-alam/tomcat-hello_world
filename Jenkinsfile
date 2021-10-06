@@ -16,7 +16,7 @@ pipeline{
             }
      stage("deploy-dev"){
        steps{
-          sshagent ['webserver_login']) {
+          sshagent (['webserver_login']) {
           sh """
           scp -o StrictHostKeyChecking=no target/myweb.war root@192.168.1.80:/tmp
           ssh root@192.168.1.80 /opt/tomcat/latest/bin/shutdown.sh
