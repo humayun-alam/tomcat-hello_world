@@ -18,8 +18,7 @@ pipeline{
        steps{
           sshagent(['staging']) {
           sh """
-          scp -o StrictHostKeyChecking=no target/myweb.war 
-          root@192.168.1.80:/tmp
+          scp -o StrictHostKeyChecking=no target/myweb.war root@192.168.1.80:/tmp
           ssh root@192.168.1.80 /opt/tomcat/latest/bin/shutdown.sh
           ssh root@192.168.1.80 /opt/tomcat/latest/bin/startup.sh
             """
