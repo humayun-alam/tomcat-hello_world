@@ -1,11 +1,12 @@
 pipeline {
   environment {
-    JAVA_TOOL_OPTIONS = "-Duser.home=/home/jenkins"
+    JAVA_TOOL_OPTIONS = "-Duser.home=/var/maven"
   }
   agent {
-    dockerfile {
+    docker {
+      image "humayunalam/tomcat-maven"
       label "test-server"
-      args "-v /tmp/maven:/home/jenkins/.m2 -e MAVEN_CONFIG=/home/jenkins/.m2"
+      args "-v /tmp/maven:/var/maven/.m2 -e MAVEN_CONFIG=/var/maven/.m2"
     }
   }
 
@@ -13,8 +14,9 @@ pipeline {
   stages {
     stage ("Build") {
       steps {
-        
-	sh "mvn -version"
+        sh "yum install openssh-clients -y"
+        sh "ssh -V"
+        sh "mvn -version"
         sh "mvn clean install"
       }
     }

@@ -19,9 +19,7 @@ RUN echo 'export PATH=${M2_HOME}/bin:${PATH}' >> /etc/profile.d/mavenenv.sh
 RUN chmod +x /etc/profile.d/mavenenv.sh
 RUN source /etc/profile.d/mavenenv.sh
 
-#WORKDIR /opt/tomcat/webapps
-#COPY target/*.war .
 EXPOSE 8080
 
-#CMD ["/opt/tomcat/bin/catalina.sh", "run"]
+CMD ["/opt/tomcat/bin/catalina.sh", "run"]
 
