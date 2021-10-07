@@ -14,6 +14,7 @@ pipeline {
     stage ("Build") {
       steps {
         
+	sh "mkdir /var/maven"
 	sh "cd /var/maven"
 	sh "curl -SL  http://www-eu.apache.org/dist/maven/maven-3/3.5.4/binaries/apache-maven-3.5.4-bin.tar.gz | tar -xz"
 	sh " mv apache-maven-3.5.4 maven"

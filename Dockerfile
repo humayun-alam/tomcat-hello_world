@@ -9,7 +9,7 @@ RUN mv apache-tomcat-8.5.72/* /opt/tomcat/.
 RUN yum -y install java
 RUN useradd -m -u 1000 -s /bin/bash jenkins
 RUN java -version
-RUN mkdir /var/maven
+#RUN mkdir /var/maven
 
 WORKDIR /opt/tomcat/webapps
 COPY target/*.war .
