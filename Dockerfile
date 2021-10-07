@@ -10,7 +10,7 @@ RUN yum -y install java
 RUN java -version
 
 WORKDIR /opt/tomcat/webapps
-COPY target/helloworld.war .
+COPY target/*.war .
 EXPOSE 8080
 
 CMD ["/opt/tomcat/bin/catalina.sh", "run"]
