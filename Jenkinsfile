@@ -1,17 +1,12 @@
 pipeline {
-    agent any
-    stages {
-        stage('Build') {
-            agent {
-                docker {
-                    image 'humayunalam/tomcat-maven'
-                    // Run the container on the node specified at the top-level of the Pipeline, in the same workspace, rather than on a new node entirely:
-                    reuseNode true
-                }
-            }
-            steps {
-                sh 'mvn -V'
-            }
-        }
+
+  stages {
+    stage ('Building') {
+      steps {
+        sh '''
+        docker run -i -v ./:/src -w /src 229703e16d76  /bin/bash -c "mvn -V" 
+        '''
+      }
     }
+  }
 }
