@@ -1,7 +1,7 @@
 pipeline {
     agent {
         docker {
-            image 'humayunalam/tomcat-maven"'
+            image 'humayunalam/tomcat-maven'
             args '-v $HOME/.m2:/root/.m2'
         }
     }
