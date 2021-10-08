@@ -1,14 +1,16 @@
 pipeline {
-    agent {
-        docker {
-            image 'maven:3.8.1-adoptopenjdk-11'
-            args '-v $HOME/.m2:/root/.m2'
-        }
-    }
+    agent any
     stages {
         stage('Build') {
+            agent {
+                docker {
+                    image 'humayunalam/tomcat-maven'
+                    // Run the container on the node specified at the top-level of the Pipeline, in the same workspace, rather than on a new node entirely:
+                    reuseNode true
+                }
+            }
             steps {
-                sh 'mvn clean package'
+                sh 'mvn -V'
             }
         }
     }
