@@ -10,6 +10,8 @@ pipeline {
             steps {
                 sh 'mvn clean package'
                 sh "hostname"
+                """
+                """
             }
         }
     }
