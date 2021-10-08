@@ -1,12 +1,15 @@
 pipeline {
-    agent any
-  stages {
-    stage ('Building') {
-      steps {
-        sh '''
-        docker run -i  229703e16d76  /bin/bash -c "/opt/maven/bin/mvn -V" 
-        '''
-      }
+    agent {
+        docker {
+            image 'maven:3.8.1-adoptopenjdk-11'
+            args '-v $HOME/.m2:/root/.m2'
+        }
     }
-  }
+    stages {
+        stage('Build') {
+            steps {
+                sh 'mvn clean package'
+            }
+        }
+    }
 }
