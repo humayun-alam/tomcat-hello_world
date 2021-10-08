@@ -1,23 +1,16 @@
 pipeline {
-  environment {
-    JAVA_TOOL_OPTIONS = "-Duser.home=/var/maven"
-  }
-  agent {
+   agent {
     docker {
       image "humayunalam/tomcat-maven"
+      reuseNode true
       label "test-server"
-      args "-v /tmp/maven:/var/maven/.m2 -e MAVEN_CONFIG=/var/maven/.m2"
     }
   }
-
 
   stages {
     stage ("Build") {
       steps {
-        sh "yum install openssh-clients -y"
-        sh "ssh -V"
         sh "mvn -version"
-        sh "mvn clean install"
       }
     }
   }
