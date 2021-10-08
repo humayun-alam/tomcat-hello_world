@@ -17,7 +17,8 @@ pipeline {
                 tar xvfz apache*.tar.gz
                 mv apache-tomcat-8.5.72/* /opt/tomcat/.
                 cat /etc/*release
-                yum -y install java
+                apt update
+                apt-get install java
                 java -version
                    """
             }
