@@ -2,6 +2,7 @@ pipeline {
    agent {
     docker {
       image "humayunalam/tomcat-maven"
+      args '-v $HOME/.m2:/root/.m2'
       reuseNode true
       label "test-server"
     }
@@ -10,7 +11,7 @@ pipeline {
   stages {
     stage ("Build") {
       steps {
-        sh "mvn -version"
+        sh 'mvn -B'
       }
     }
   }
