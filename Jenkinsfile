@@ -21,7 +21,7 @@ pipeline{
           scp -o StrictHostKeyChecking=no target/*.war root@192.168.1.80:/opt/tomcat/latest/webapps
           ssh root@192.168.1.80 systemctl stop tomcat
           ssh root@192.168.1.80 systemctl start tomcat
-	  echo "bf5td"
+	  echo "hello"
             """
             }
           }
