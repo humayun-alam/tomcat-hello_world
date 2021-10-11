@@ -18,9 +18,9 @@ pipeline{
        steps{
           sshagent (['ssh_root_key']) {
           sh """
-          scp -o StrictHostKeyChecking=no target/*.war root@192.168.1.80:/opt/tomcat/latest/webapps
-          ssh root@192.168.1.80 systemctl stop tomcat
-          ssh root@192.168.1.80 systemctl start tomcat
+          scp -o StrictHostKeyChecking=no target/*.war root@192.168.1.63:/opt/tomcat/latest/webapps
+          ssh root@192.168.1.63 systemctl stop tomcat
+          ssh root@192.168.1.63 systemctl start tomcat
 	  echo "This is staging branch"
             """
             }
