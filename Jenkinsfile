@@ -21,7 +21,7 @@ pipeline{
           scp -o StrictHostKeyChecking=no target/*.war root@192.168.1.63:/opt/tomcat/latest/webapps
           ssh root@192.168.1.63 systemctl stop tomcat
           ssh root@192.168.1.63 systemctl start tomcat
-	  echo "This is staging branch"
+	  echo "This is staging branchh"
             """
             }
           }
