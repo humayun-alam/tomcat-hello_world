@@ -4,7 +4,6 @@ pipeline {
         stage('Build') {
             steps {
                 echo 'Running build automation'
-                echo env.BRANCH_NAME
                 sh 'mvn clean package'
             }
         }
