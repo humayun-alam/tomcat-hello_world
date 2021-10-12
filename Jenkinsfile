@@ -4,12 +4,16 @@ pipeline {
         stage('Build') {
             steps {
                 echo 'Running build automation'
+                echo env.BRANCH_NAME
                 sh 'mvn clean package'
             }
         }
         stage('DeployToStaging') {
             when {
-                branch 'main'
+                expression {
+                    return env.BRANCH_NAME == 'main';
+                }
+                
             } 
             steps {
                 withCredentials([usernamePassword(credentialsId: 'webserver_login', usernameVariable: 'USERNAME', passwordVariable: 'USERPASS')]) {
@@ -38,7 +42,7 @@ pipeline {
             }
         }
         stage('DeployToProduction') {
-            when {
+           when {
                 branch 'main'
             } 
             steps {
@@ -71,3 +75,5 @@ pipeline {
         }
     }
 }
+
+
