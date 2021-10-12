@@ -9,12 +9,6 @@ pipeline {
             }
         }
         stage('DeployToStaging') {
-            when {
-                expression {
-                    return env.BRANCH_NAME == 'main';
-                }
-                
-            } 
             steps {
                 withCredentials([usernamePassword(credentialsId: 'webserver_login', usernameVariable: 'USERNAME', passwordVariable: 'USERPASS')]) {
                     sshPublisher(
@@ -42,9 +36,7 @@ pipeline {
             }
         }
         stage('DeployToProduction') {
-           when {
-                branch 'main'
-            } 
+             
             steps {
                 input 'Does the staging environment look OK?'
                 milestone(1)
