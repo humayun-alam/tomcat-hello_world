@@ -9,7 +9,7 @@ pipeline {
         }
         stage('DeployToStaging') {
             when {
-                branch 'main'
+                branch 'branch-two'
             } 
             steps {
                 withCredentials([usernamePassword(credentialsId: 'webserver_login', usernameVariable: 'USERNAME', passwordVariable: 'USERPASS')]) {
@@ -39,7 +39,7 @@ pipeline {
         }
         stage('DeployToProduction') {
             when {
-                branch 'main'
+                branch 'branch-two'
             } 
             steps {
                 input 'Does the staging environment look OK?'
