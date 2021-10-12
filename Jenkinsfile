@@ -1,6 +1,13 @@
 pipeline {
     agent any
     stages {
+        stage('Git checkout') {
+          steps{
+          git branch: 'staging',
+          credentialsId: 'github', 
+            url: 'https://github.com/humayun-alam/tomcat-hello_world.git'
+          }
+        }
         stage('Build') {
             steps {
                 echo 'Running build automation'
