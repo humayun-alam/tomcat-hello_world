@@ -1,30 +1,73 @@
-pipeline{
-  agent any
-  stages{
-    stage("Git Checkout"){
-      steps{
-          git branch: 'staging',
-            credentialsId: 'github', 
-            url: 'https://github.com/humayun-alam/tomcat-hello_world.git'
-           }
-          }
-     stage("Maven Build"){
-       steps{
-            sh "mvn clean package"
-//            sh "mv target/*.war target/myweb.war"
-             }
+pipeline {
+    agent any
+    stages {
+        stage('Build') {
+            steps {
+                echo 'Running build automation'
+                sh 'mvn clean package'
             }
-     stage("deploy-dev"){
-       steps{
-          sshagent (['ssh_root_key']) {
-          sh """
-          scp -o StrictHostKeyChecking=no target/*.war root@192.168.1.63:/opt/tomcat/latest/webapps
-          ssh root@192.168.1.63 systemctl stop tomcat
-          ssh root@192.168.1.63 systemctl start tomcat
-	  echo "This is staging branchh"
-            """
-            }
-          }
         }
-      }
+        stage('DeployToStaging') {
+            when {
+                branch 'staging'
+            }
+            steps {
+                withCredentials([usernamePassword(credentialsId: 'webserver_login', usernameVariable: 'USERNAME', passwordVariable: 'USERPASS')]) {
+                    sshPublisher(
+                        failOnError: true,
+                        continueOnError: false,
+                        publishers: [
+                            sshPublisherDesc(
+                                configName: 'staging',
+                                sshCredentials: [
+                                    username: "$USERNAME",
+                                    encryptedPassphrase: "$USERPASS"
+                                ], 
+                                transfers: [
+                                    sshTransfer(
+                                        sourceFiles: 'target/*.war',
+                                        removePrefix: 'target/',
+                                        remoteDirectory: '/opt/tomcat/latest/webapps',
+                                        execCommand: 'sudo systemctl start tomcat'
+                                    )
+                                ]
+                            )
+                        ]
+                    )
+                }
+            }
+        }
+        stage('DeployToProduction') {
+            when {
+                branch 'staging'
+            }
+            steps {
+                input 'Does the staging environment look OK?'
+                milestone(1)
+                withCredentials([usernamePassword(credentialsId: 'webserver_login', usernameVariable: 'USERNAME', passwordVariable: 'USERPASS')]) {
+                    sshPublisher(
+                        failOnError: true,
+                        continueOnError: false,
+                        publishers: [
+                            sshPublisherDesc(
+                                configName: 'production',
+                                sshCredentials: [
+                                    username: "$USERNAME",
+                                    encryptedPassphrase: "$USERPASS"
+                                ], 
+                                transfers: [
+                                    sshTransfer(
+                                        sourceFiles: 'target/*.war',
+                                        removePrefix: 'target/',
+                                        remoteDirectory: '/opt/tomcat/latest/webapps',
+                                        execCommand: 'sudo systemctl start tomcat'
+                                    )
+                                ]
+                            )
+                        ]
+                    )
+                }
+            }
+        }
     }
+}
