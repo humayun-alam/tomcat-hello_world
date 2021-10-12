@@ -1,13 +1,6 @@
 pipeline {
     agent any
     stages {
-        stage('Git checkout') {
-          steps{
-          git branch: 'main',
-          credentialsId: 'github', 
-            url: 'https://github.com/humayun-alam/tomcat-hello_world.git'
-          }
-        }
         stage('Build') {
             steps {
                 echo 'Running build automation'
@@ -29,7 +22,7 @@ pipeline {
                                 sshCredentials: [
                                     username: "$USERNAME",
                                     encryptedPassphrase: "$USERPASS"
-                                ], 
+                                ],
                                 transfers: [
                                     sshTransfer(
                                         sourceFiles: 'target/*.war',
@@ -61,7 +54,7 @@ pipeline {
                                 sshCredentials: [
                                     username: "$USERNAME",
                                     encryptedPassphrase: "$USERPASS"
-                                ], 
+                                ],
                                 transfers: [
                                     sshTransfer(
                                         sourceFiles: 'target/*.war',
@@ -78,4 +71,3 @@ pipeline {
         }
     }
 }
-
