@@ -67,7 +67,7 @@ pipeline {
                         ]
                     )
                 }
-            	sh 'echo this is ${env.BRANCH_NAME}'
+            	sh "echo this is ${env.BRANCH_NAME}"
 	    }
         }
     }
