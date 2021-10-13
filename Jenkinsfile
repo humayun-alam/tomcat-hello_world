@@ -67,7 +67,8 @@ pipeline {
                         ]
                     )
                 }
-            }
+            	sh 'echo this is env.BRANCH_NAME'
+	    }
         }
     }
 }
