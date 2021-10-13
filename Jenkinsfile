@@ -62,6 +62,7 @@ pipeline {
                         ]
                     )
                 }
+		sh "echo this is ${env.GIT_BRANCH}"
             }
         }
     }
